@@ -16,9 +16,14 @@ public class Corp implements IEmploymentManager {
     private Corp() {
     }
 
-    void resetCorp() {
-        if (null != this.employees)
-            this.employees.clear();
+    static void resetCorp() {
+        if (null == corpInstance)
+            return;
+
+        if (null != corpInstance.employees) {
+            corpInstance.employees.clear();
+            corpInstance.employees = null;
+        }
         corpInstance = null;
     }
 
@@ -29,8 +34,9 @@ public class Corp implements IEmploymentManager {
 
     /**
      * Any person who comes can become a new employee
+     *
      * @param applicant {@link Person} who applies
-     * @param bossId pass -1 to hire person as C-level manager
+     * @param bossId    pass -1 to hire person as C-level manager
      * @return {@code null} if something goes wrong, employed person otherwise
      */
     @Override
@@ -59,6 +65,7 @@ public class Corp implements IEmploymentManager {
 
     /**
      * Calls {@link Corp#hireAsNewSubordinate(Person, long)} with -1 as bossID
+     *
      * @param applicant {@link Person} who applies
      */
     @Override

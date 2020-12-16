@@ -22,7 +22,7 @@ public class CorpTest {
     @After
     public void tearDown() {
         assertNotNull("corp instance was not created", corpInstance);
-        corpInstance.resetCorp();
+        Corp.resetCorp();
         corpInstance = null;
     }
 
