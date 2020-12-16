@@ -1,10 +1,13 @@
 package entity;
 
 import java.util.LinkedList;
-import java.util.List;
 
-abstract class ReporterAbstract implements IReporter {
+abstract class ReporterAbstract extends Person implements IReporter {
     protected LinkedList<String> reports;
+
+    ReporterAbstract(Person applicant) {
+        super(applicant);
+    }
 
     @Override
     public void addReport(String report) {

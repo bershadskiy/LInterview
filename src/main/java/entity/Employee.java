@@ -1,35 +1,36 @@
 package entity;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.Random;
 
-public class Employee extends PersonAbstract implements IManager {
+public class Employee extends ReporterAbstract implements IManager {
+    private final long employeeId;
+    private long bossId;
+    private HashSet<Long> subordinatesIds;
+
+    public Employee(Person applicant) {
+        super(applicant);
+        this.employeeId = new Random().nextLong();
+    }
+
     public long getEmployeeId() {
         return employeeId;
     }
-
-    private final long employeeId;
 
     public long getBossId() {
         return bossId;
     }
 
-    public void setBossId(long bossId) {
+    public Employee setBossId(long bossId) {
         this.bossId = bossId;
-    }
-
-    private long bossId;
-    private LinkedList<Long> subordinatesIds;
-
-    public Employee() {
-        this.employeeId = new Random().nextLong();
+        return this;
     }
 
     @Override
-    public void addSubordinate(long subordinateId) {
+    public boolean addSubordinate(long subordinateId) {
         if(null == this.subordinatesIds)
-            this.subordinatesIds = new LinkedList<>();
-        subordinatesIds.addLast(subordinateId);
+            this.subordinatesIds = new HashSet<>();
+        return subordinatesIds.add(subordinateId);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class Employee extends PersonAbstract implements IManager {
     }
 
     @Override
-    public LinkedList<Long> getSubordinatesIds() {
+    public HashSet<Long> getSubordinatesIds() {
         return this.subordinatesIds;
     }
 }

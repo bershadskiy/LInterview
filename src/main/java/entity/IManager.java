@@ -1,9 +1,9 @@
 package entity;
 
-import java.util.List;
+import java.util.HashSet;
 
 public interface IManager {
-    void addSubordinate(long subordinateId);
+    boolean addSubordinate(long subordinateId);
     boolean hasNoSubordinates();
-    List<Long> getSubordinatesIds();
+    HashSet<Long> getSubordinatesIds();
 }
