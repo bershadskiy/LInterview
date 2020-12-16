@@ -8,8 +8,21 @@ public final class Employee extends ReporterAbstract implements IManager {
     private long bossId = -1;
     private HashSet<Long> subordinatesIds = null;
 
-    Employee(Person applicant) {
-        super(applicant);
+    static Employee fromPerson(Person person) {
+        if (null == person)
+            return null;
+        Employee employee = null;
+        try {
+            employee = new Employee(person);
+        } catch (Exception e) {
+            //it's almost impossible to pass broken person obj as param, but still
+            e.printStackTrace();
+        }
+        return employee;
+    }
+
+    private Employee(Person applicant) {
+        super(applicant.getAge(), applicant.getAddress());
         this.employeeId = new Random().nextLong();
     }
 
@@ -31,7 +44,7 @@ public final class Employee extends ReporterAbstract implements IManager {
 
     @Override
     public boolean addSubordinate(long subordinateId) {
-        if(null == this.subordinatesIds)
+        if (null == this.subordinatesIds)
             this.subordinatesIds = new HashSet<>();
         return subordinatesIds.add(subordinateId);
     }

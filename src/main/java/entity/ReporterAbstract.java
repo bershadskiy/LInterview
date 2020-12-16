@@ -5,8 +5,8 @@ import java.util.LinkedList;
 abstract class ReporterAbstract extends Person implements IReporter {
     protected LinkedList<String> reports;
 
-    ReporterAbstract(Person applicant) {
-        super(applicant);
+    public ReporterAbstract(int age, String address) {
+        super(age, address);
     }
 
     @Override

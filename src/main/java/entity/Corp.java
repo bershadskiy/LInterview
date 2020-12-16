@@ -51,7 +51,7 @@ public class Corp implements IEmploymentManager {
                 return null;
         }
 
-        Employee hiring = new Employee(applicant)
+        Employee hiring = Employee.fromPerson(applicant)
                 .setBossId(bossId);
         long employeeId = hiring.getMyEmployeeId();
 
