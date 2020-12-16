@@ -1,7 +1,6 @@
 package entity;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,7 +43,7 @@ public class CorpTest {
         Person p = new Person(1, "address");
         Employee employee = this.corpInstance.hireAsBoss(p);
         assertNotNull("should be no restrictions to hire a person as boss", employee);
-        assertEquals("C-level manager should have -1 as bossID", -1, employee.getBossId());
+        assertEquals("C-level manager should have -1 as bossID", -1, employee.getMyBossId());
         assertFalse("Employee is not added to the office", this.corpInstance.hasNoEmployees());
         assertEquals("age is different", p.getAge(), employee.getAge());
         assertEquals("address is different", p.getAddress(), employee.getAddress());
@@ -62,19 +61,19 @@ public class CorpTest {
         assertNull("Employee was hired for unknown boss", rejectedEmployee);
         assertTrue("Employee was still added to corp", this.corpInstance.hasNoEmployees());
         Employee boss = this.corpInstance.hireAsBoss(pBoss);
-        desiredBossId = boss.getEmployeeId();
+        desiredBossId = boss.getMyEmployeeId();
         assertTrue("newly added boss has no subordinates", boss.hasNoSubordinates());
         Employee employee = this.corpInstance.hireAsNewSubordinate(pApplicant, desiredBossId);
-        assertEquals("wrong bossID", desiredBossId, employee.getBossId());
+        assertEquals("wrong bossID", desiredBossId, employee.getMyBossId());
         assertTrue("employee is not added to boss subordinates",
-                boss.getSubordinatesIds().contains(employee.getEmployeeId()));
+                boss.getSubordinatesIds().contains(employee.getMyEmployeeId()));
     }
 
     @Test
     public void findById() {
         Person p = new Person(2);
         Employee boss = this.corpInstance.hireAsBoss(p);
-        Employee byId = this.corpInstance.findById(boss.getEmployeeId());
+        Employee byId = this.corpInstance.findById(boss.getMyEmployeeId());
         assertSame("employed boss is different from founded one", boss, byId);
     }
 

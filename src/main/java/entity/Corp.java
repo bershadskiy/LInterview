@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Corp implements IEmploymentManager {
-    private static Corp corpInstance;
-    private HashMap<Long, Employee> employees;
+    private static Corp corpInstance = null;
+    private HashMap<Long, Employee> employees = null;
 
     public static Corp getInstance() {
         if (null == corpInstance)
@@ -53,7 +53,7 @@ public class Corp implements IEmploymentManager {
 
         Employee hiring = new Employee(applicant)
                 .setBossId(bossId);
-        long employeeId = hiring.getEmployeeId();
+        long employeeId = hiring.getMyEmployeeId();
 
         if (-1 == bossId || desiredBoss.addSubordinate(employeeId))
             this.employees.put(employeeId, hiring);
