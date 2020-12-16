@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 
@@ -95,7 +96,7 @@ public class CorpTest {
         Person p = new Person(1);
         Employee employee = this.corpInstance.hireAsBoss(p);
         Employee employee1 = this.corpInstance.hireAsBoss(p);
-        final ArrayList<Employee> allEmployees = this.corpInstance.getAllEmployees();
+        final Collection<Employee> allEmployees = this.corpInstance.getAllEmployees();
         assertEquals("All employees collection not matching input size",
                 2, allEmployees.size());
         final String collection_is_broken_msg = "Collection is broken";

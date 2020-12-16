@@ -1,12 +1,12 @@
 package entity;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IEmploymentManager {
     boolean hasNoEmployees();
     Employee hireAsNewSubordinate(Person applicant, long bossId);
     Employee hireAsBoss(Person applicant);
     Employee findById(long employeeId);
-    List<Employee> getAllEmployees();
+    Collection<Employee> getAllEmployees();
     int getEmployeesCount();
 }

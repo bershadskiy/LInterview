@@ -1,10 +1,15 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * For now class is lacking of employees dismissing logic
+ * also as cross-subordinates check during hiring process
+ */
 public class Corp implements IEmploymentManager {
     private static Corp corpInstance = null;
+    //can be replaced with more efficient SparseLongArray, available within Android SDK
     private HashMap<Long, Employee> employees = null;
 
     public static Corp getInstance() {
@@ -82,11 +87,11 @@ public class Corp implements IEmploymentManager {
     }
 
     @Override
-    public ArrayList<Employee> getAllEmployees() {
+    public Collection<Employee> getAllEmployees() {
         if (this.hasNoEmployees())
             return null;
 
-        return new ArrayList<>(this.employees.values());
+        return this.employees.values();
     }
 
     @Override
