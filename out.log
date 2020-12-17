@@ -1,0 +1,14 @@
+
+> Task :run
+John was hired as Corp CEO
+Mary was hired as John (CEO)'s subordinate
+Peter was hired as John (CEO)'s subordinate
+Michael was hired as John (CEO)'s subordinate
+Sam was hired as Mary's subordinate
+Will was hired as Mary's subordinate
+Jackie was hired as Will's subordinate
+Sam was hired as Will's subordinate
+Corp is not hiring anymore. Proper implementation for taking employee by name for read/write access can be checked inside the test
+
+BUILD SUCCESSFUL in 0s
+2 actionable tasks: 2 executed

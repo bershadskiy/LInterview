@@ -7,8 +7,14 @@ I considering, that reports adding is only important operation with employees re
 
 Person 'address' field can be replaced with 'name'
 
+Test cases is enough to prove necessary read/write access
+
 # Files
 Classes structure is placed inside 'entity' package for purposes of access control example.
+
+## Output log
+
+Latest output is placed inside `./out.log` file 
 
 ## Interfaces
 
