@@ -37,3 +37,11 @@ Contains employees storage and management logic
 
 ## Test
 Contains automated test for Person and Corp classes
+
+# Build instructions
+
+Inside project root folder run 
+
+`./gradlew build` to build and test the project
+
+`./gradlew run` to run app
