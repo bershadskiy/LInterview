@@ -6,9 +6,9 @@ public class Person {
         this(age, null);
     }
 
-    public Person(int age, String address) {
+    public Person(int age, String name) {
         setAge(age);
-        this.address = address;
+        this.name = name;
     }
 
     public int getAge() {
@@ -21,10 +21,10 @@ public class Person {
         this.age = age;
     }
 
-    public String getAddress() {
-        return address;
+    public String getName() {
+        return name;
     }
 
     private int age;
-    private String address;
+    private String name;
 }

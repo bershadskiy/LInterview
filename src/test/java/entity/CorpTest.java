@@ -4,8 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -47,7 +47,7 @@ public class CorpTest {
         assertEquals("C-level manager should have -1 as bossID", -1, employee.getMyBossId());
         assertFalse("Employee is not added to the office", this.corpInstance.hasNoEmployees());
         assertEquals("age is different", p.getAge(), employee.getAge());
-        assertEquals("address is different", p.getAddress(), employee.getAddress());
+        assertEquals("address is different", p.getName(), employee.getName());
     }
 
     /**
@@ -104,5 +104,85 @@ public class CorpTest {
         assertTrue(collection_is_broken_msg, allEmployees.contains(employee1));
     }
 
+    @Test
+    public void findByName() {
+        Person p = new Person(1, "John");
+        Employee employee = this.corpInstance.hireAsBoss(p);
+        assertNotNull(employee);
+        ArrayList<Employee> johnList = new ArrayList<>(this.corpInstance.findByName("John"));
+        assertNotNull(johnList);
+        assertEquals(1, johnList.size());
+        Employee actual = johnList.get(0);
+        assertEquals(employee, actual);
+        employee.setAge(11);
+        assertEquals(11, actual.getAge());
+    }
 
+    @Test
+    public void findByNameAndID() {
+        Person p = new Person(1, "John");
+        this.corpInstance.hireAsBoss(p);
+        this.corpInstance.hireAsBoss(p);
+        this.corpInstance.hireAsBoss(p);
+        this.corpInstance.hireAsBoss(p);
+        this.corpInstance.hireAsBoss(p);
+        ArrayList<Employee> johnsList = new ArrayList<>(this.corpInstance.findByName("John"));
+        assertNotNull(johnsList);
+        assertEquals(5, johnsList.size());
+        Employee actual = johnsList.get(0);
+        Employee byId = this.corpInstance.findById(actual.getMyEmployeeId());
+        assertEquals(byId, actual);
+        byId.setAge(11);
+        assertEquals(11, actual.getAge());
+        johnsList.remove(0);
+        for (Employee e : johnsList) {
+            assertEquals(1, e.getAge());
+        }
+    }
+
+    int count = 4 * 1000 * 1000;
+    String[] names = new String[]{"John", "Tom", "Rebeca", "April"};
+
+    @Test
+    public void timeO() {
+        HashMap<Long, Employee> s = new HashMap<>(1);
+        long startAdd = System.currentTimeMillis();
+        Employee e = null;
+        for (int i = 0; i < count; i++) {
+            e = Employee.fromPerson(new Person(i + 1, names[i % 4]));
+            s.put(e.getMyEmployeeId(), e);
+        }
+        long addDoneMs = System.currentTimeMillis();
+        System.out.println("HM time to add");
+        System.out.println((addDoneMs - startAdd));
+
+        Employee finalE = e;
+        final List<Employee> collect = s.values().stream()
+                .filter(em -> em.getName().equals(finalE.getName())).collect(Collectors.toList());
+        long findDoneMs = System.currentTimeMillis();
+        System.out.println("HM time to find");
+        System.out.println((findDoneMs - addDoneMs));
+    }
+
+    @Test
+    public void timeOA() {
+        LinkedList<Employee> s = new LinkedList<>();
+        long startAdd = System.currentTimeMillis();
+        for (int i = 0; i < count; i++) {
+            Employee e = Employee.fromPerson(new Person(i + 1, names[i % 4]));
+            s.add(e);
+        }
+        long addDoneMs = System.currentTimeMillis();
+
+        System.out.println("LList time to add");
+        System.out.println((addDoneMs - startAdd));
+
+        Employee peek = s.peek();
+
+        final List<Employee> collect = s.stream()
+                .filter(e -> e.getName().equals(peek.getName())).collect(Collectors.toList());
+        long findDoneMs = System.currentTimeMillis();
+        System.out.println("LList time to find");
+        System.out.println((findDoneMs - addDoneMs));
+    }
 }

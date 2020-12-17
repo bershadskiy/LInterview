@@ -2,6 +2,9 @@ package entity;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * For now class is lacking of employees dismissing logic
@@ -10,7 +13,8 @@ import java.util.HashMap;
 public class Corp implements IEmploymentManager {
     private static Corp corpInstance = null;
     //can be replaced with more efficient SparseLongArray, available within Android SDK
-    private HashMap<Long, Employee> employees = null;
+    //after performance test LinkedList looks better time-wise
+    private LinkedList<Employee> employees = null;
 
     public static Corp getInstance() {
         if (null == corpInstance)
@@ -46,8 +50,9 @@ public class Corp implements IEmploymentManager {
      */
     @Override
     public Employee hireAsNewSubordinate(Person applicant, long bossId) {
-        if (null == this.employees)
-            this.employees = new HashMap<>(1);
+        if (null == this.employees) {
+            this.employees = new LinkedList<>();
+        }
 
         Employee desiredBoss = null;
         if (-1 != bossId) {
@@ -61,7 +66,7 @@ public class Corp implements IEmploymentManager {
         long employeeId = hiring.getMyEmployeeId();
 
         if (-1 == bossId || desiredBoss.addSubordinate(employeeId))
-            this.employees.put(employeeId, hiring);
+            this.employees.add(hiring);
         else
             hiring = null;
 
@@ -83,15 +88,23 @@ public class Corp implements IEmploymentManager {
         if (hasNoEmployees())
             return null;
 
-        return this.employees.get(employeeId);
+        return employees
+                .stream()
+                .filter(e -> e.getMyEmployeeId()== employeeId).findFirst().orElse(null);
+    }
+
+    public List<Employee> findByName(String name) {
+        return employees
+                .stream()
+                .filter(e -> e.getName().equals(name)).collect(Collectors.toList());
     }
 
     @Override
-    public Collection<Employee> getAllEmployees() {
+    public LinkedList<Employee> getAllEmployees() {
         if (this.hasNoEmployees())
             return null;
 
-        return this.employees.values();
+        return this.employees;
     }
 
     @Override

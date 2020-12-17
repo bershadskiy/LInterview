@@ -22,7 +22,7 @@ public final class Employee extends ReporterAbstract implements IManager {
     }
 
     private Employee(Person applicant) {
-        super(applicant.getAge(), applicant.getAddress());
+        super(applicant.getAge(), applicant.getName());
         this.employeeId = new Random().nextLong();
     }
 
